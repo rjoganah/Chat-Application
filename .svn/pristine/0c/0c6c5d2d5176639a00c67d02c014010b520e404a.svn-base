@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ChatLib
+{
+    public class ConnectedUser
+    {
+        public String name;
+        public String password;
+        public Socket userSocket;
+
+        public ConnectedUser() 
+        {
+        
+        }
+
+        public ConnectedUser(String user, String pass)
+        {
+            this.name = user;
+            this.password = pass;
+        }
+
+    }
+}

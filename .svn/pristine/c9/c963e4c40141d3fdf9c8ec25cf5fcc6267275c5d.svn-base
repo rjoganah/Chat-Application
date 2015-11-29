@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CSharpClientApplication
+{
+    public partial class FormConnection : Form
+    {
+        public FormConnection()
+        {
+            InitializeComponent();
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            if (this.textBoxUsername.Text.Length == 0 || this.textBoxPassword.Text.Length == 0)
+            {
+                MessageBox.Show("Username and/or password is missing...");
+            }
+            else
+            {
+                // If Connection Successful
+                if (true)
+                {
+                    this.Visible = false;
+                    FormMain FormMain = new FormMain();
+                    FormMain.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Error.");
+                }
+            }
+        }
+    }
+}

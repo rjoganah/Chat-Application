@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CSharpClientApplication
+{
+    public partial class FormChatPrivate : Form
+    {
+        public FormChatPrivate()
+        {
+            InitializeComponent();
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxMessage_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBoxMessage.Text.Length > 0)
+            {
+                this.buttonSend.Enabled = true;
+            }
+            else
+            {
+                this.buttonSend.Enabled = false;
+            }
+        }
+    }
+}

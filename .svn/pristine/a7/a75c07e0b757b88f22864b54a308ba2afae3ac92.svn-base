@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CSharpServerApplication
+{
+    class Message
+    {
+        public String source;
+        public String[] destinataire;
+        public String content;
+        public DateTime date;
+
+        public Message()
+        {
+
+        }
+
+        public Message(String source, String[] destinataire, String content, DateTime date)
+        {
+            this.source = source;
+            this.destinataire = destinataire;
+            this.content = content;
+            this.content = content;
+            this.date = date;
+        }
+
+    }
+}

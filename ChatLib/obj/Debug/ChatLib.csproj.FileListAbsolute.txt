@@ -1,0 +1,5 @@
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\ChatLib\bin\Debug\ChatLib.dll
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\ChatLib\bin\Debug\ChatLib.pdb
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\ChatLib\obj\Debug\ChatLib.dll
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\ChatLib\obj\Debug\ChatLib.pdb
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\ChatLib\bin\Debug\Newtonsoft.Json.dll

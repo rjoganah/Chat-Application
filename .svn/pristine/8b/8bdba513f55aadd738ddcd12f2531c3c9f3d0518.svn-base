@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ChatLib
+{
+
+    public class ChatLib
+    {
+        public static int MESSAGE_MAX_SIZE = 30000;
+
+        public static MessageChat createMessageFromString(string str)
+        {
+            MessageChat msg = new MessageChat();
+
+            string[] splittedMsg = str.Split(new[] { "\\?" }, StringSplitOptions.None);
+
+            if (splittedMsg.Length > 2)
+            {
+                foreach (string s in splittedMsg)
+                {
+                    System.Diagnostics.Debug.WriteLine(s);
+                }
+
+                string messageType = splittedMsg[0];
+                string senderIP = splittedMsg[1];
+                string senderUsername = splittedMsg[2];
+                string targetUsername = splittedMsg[3];
+                string contentMessage = splittedMsg[4];
+
+                switch (messageType)
+                {
+                    case "None": msg.MessageType = MessageType.None;
+                        break;
+                    case "ConnectToServer":
+                        msg.MessageType = MessageType.ConnectToServer;
+                        break;
+                    case "ChatRoomJoin":
+                        msg.MessageType = MessageType.ChatRoomJoin;
+                        break;
+                    case "ChatRoomExit":
+                        msg.MessageType = MessageType.ChatRoomExit;
+                        break;
+                    case "ClientChatRoomMessage":
+                        msg.MessageType = MessageType.ClientChatRoomMessage;
+                        break;
+                    case "ClientPrivateMessage": msg.MessageType = MessageType.ClientPrivateMessage;
+                        break;
+                    case "PrivateChatCreate": msg.MessageType = MessageType.PrivateChatCreate;
+                        break;
+                    case "DisconnectFromServer": msg.MessageType = MessageType.DisconnectFromServer;
+                        break;
+                    case "ChatRoomDelete": msg.MessageType = MessageType.ChatRoomDelete;
+                        break;
+                    case "ChatRoomCreate": msg.MessageType = MessageType.ChatRoomCreate;
+                        break;
+                    case "UpdateConnectedUsers": msg.MessageType = MessageType.UpdateConnectedUsers;
+                        break;
+                    case "UpdateConnectedUsersInChatRoom": msg.MessageType = MessageType.UpdateConnectedUsersInChatRoom;
+                        break;
+                    case "UpdateChatRoomList": msg.MessageType = MessageType.UpdateChatRoomList;
+                        break;
+                    case "ServerChatRoomMessage": msg.MessageType = MessageType.ServerChatRoomMessage;
+                        break;
+                    case "ServerPrivateMessage": msg.MessageType = MessageType.ServerPrivateMessage;
+                        break;
+                    case "ShutdownServer": msg.MessageType = MessageType.ShutdownServer;
+                        break;
+
+                }
+
+                msg.SenderIP = IPAddress.Parse(senderIP);
+                msg.SenderName = senderUsername;
+                msg.TargetUsername = targetUsername;
+                msg.ContentMessage = contentMessage;
+            }
+
+            return msg;
+        }
+        
+        public static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+
+        public static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+
+        public static string GetString(byte[] bytes, int length)
+        {
+            char[] chars = new char[length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, length - 1);
+            return new string(chars);
+        }
+
+        public static void serialize()
+        {
+            MemoryStream stream1 = new MemoryStream();
+            DataContractJsonSerializer ser = new DataContractJsonSerializer();
+            
+        }
+
+        static Semaphore semaphor = new Semaphore(1, 1);
+
+        public static void SendMessage(Socket socket, MessageChat msg)
+        {
+            semaphor.WaitOne();
+
+            socket.Send(GetBytes(msg.ToString()));
+
+            semaphor.Release();
+        }
+    }
+}

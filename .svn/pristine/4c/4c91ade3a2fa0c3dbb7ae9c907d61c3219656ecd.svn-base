@@ -1,0 +1,71 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ChatLib
+{
+    public class MessageChat
+    {
+        private MessageType messageType = MessageType.None;
+        private string senderName = null;
+        private string targetName = null;
+        private string content = null;
+
+        public MessageChat() { }
+
+        /*
+         * Format :  
+         *         {
+                        "type":"Message",
+                        "senderName":"Trolol",
+                        "targetName":null,
+                        "content":"blablabla"
+                    }
+         */
+
+        public MessageChat(MessageType type, string name, string target, string content)
+        {
+            this.messageType = type;
+            this.senderName = name;
+            this.targetName = target;
+            this.content = content;
+        }
+
+        public MessageChat(string msg)
+        {
+
+        }
+
+        public string SenderName
+        {
+            get { return senderName; }
+            set { senderName = value; }
+        }
+        
+        public MessageType MessageType
+        {
+            get { return messageType; }
+            set { messageType = value; }
+        }
+
+         public string TargetName
+        {
+            get { return targetName; }
+            set { targetName = value; }
+        }
+
+        public string ContentMessage
+        {
+            get { return content; }
+            set { content = value; }
+        }
+
+        //public override string ToString()
+        //{
+        //    return MessageType.ToString() + "\\?" + SenderIP + "\\?" + SenderName + "\\?" + TargetUsername + "\\?" + ContentMessage;
+        //}
+    }
+}

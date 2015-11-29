@@ -1,0 +1,60 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ChatLib
+{
+
+    public class ChatLib
+    {
+        public static int MESSAGE_MAX_SIZE = 30000;
+
+        public static MessageChat createMessageFromString(string str)
+        {
+            MessageChat msg = JsonConvert.DeserializeObject<MessageChat>(str);
+
+            return msg;
+        }
+        
+        public static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        public static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+
+        public static string GetString(byte[] bytes, int length)
+        {
+            char[] chars = new char[length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, length - 1);
+            return new string(chars);
+        }
+
+        static Semaphore semaphor = new Semaphore(1, 1);
+
+        public static void SendMessage(Socket socket, MessageChat msg)
+        {
+            semaphor.WaitOne();
+
+            string json = JsonConvert.SerializeObject(msg);
+
+            socket.Send(GetBytes(json));
+
+            semaphor.Release();
+        }
+    }
+}

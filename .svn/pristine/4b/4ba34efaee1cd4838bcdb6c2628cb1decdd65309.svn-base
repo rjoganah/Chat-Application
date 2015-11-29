@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Forms;
+
+namespace CSharpClientApplication
+{
+    public partial class FormChatRoom : Form
+    {
+        private FlowDocument flowDocument;
+
+        public FormChatRoom()
+        {
+            InitializeComponent();
+
+            this.flowDocument = new FlowDocument();
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            string msgToSend = this.textBoxMessage.Text;
+
+            string pseudo = "Miallow";
+            string msg = "Salut comment ca va ? lol tavu xd mdr !!!! ";
+
+            writeUsername(msgToSend);
+            writeMessage(msg);
+            //writeMessage("\n");
+        }
+
+        private void writeUsername(string username)
+        {
+            //this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Bold);
+            //this.richTextBoxChat.SelectionBackColor = Color.LightGray;
+            //this.richTextBoxChat.SelectionColor = Color.Red;
+            //this.richTextBoxChat.SelectedText = "  " + username + " : ";
+
+            Paragraph myParagraph = new Paragraph();
+
+            myParagraph.Inlines.Add(new Bold(new Run(username + " : ")));
+
+            this.flowDocument.Blocks.Add(myParagraph);
+
+            this.richTextBoxChat.SelectedText = this.flowDocument.Blocks.ToString();
+        }
+
+        private void writeMessage(string message)
+        {
+            //this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Regular);
+            //this.richTextBoxChat.SelectionBackColor = Color.Transparent;
+            //this.richTextBoxChat.SelectionColor = Color.Black;
+            //this.richTextBoxChat.SelectedText = "\t" + message;
+
+            Paragraph myParagraph = new Paragraph();
+
+            myParagraph.Inlines.Add(new Run(message));
+
+            this.flowDocument.Blocks.Add(myParagraph);
+        }
+
+        private void textBoxMessage_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBoxMessage.Text.Length > 0)
+            {
+                this.buttonSend.Enabled = true;
+            }
+            else
+            {
+                this.buttonSend.Enabled = false;
+            }
+        }
+
+
+    }
+}

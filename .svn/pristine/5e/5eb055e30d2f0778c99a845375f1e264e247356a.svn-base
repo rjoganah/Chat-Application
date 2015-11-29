@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ChatLib
+{
+    public class ChatRoom
+    {
+        public String name;
+        public List<ConnectedUser> connectedUsers;
+
+        public ChatRoom()
+        {
+
+        }
+
+        public ChatRoom(String name, List<ConnectedUser> connectedUsers)
+        {
+            this.name=name;
+            this.connectedUsers = connectedUsers;
+        }
+    }
+}

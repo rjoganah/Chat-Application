@@ -1,0 +1,93 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Drawing;
+
+
+namespace ChatLib
+{
+
+    public class ChatLib
+    {
+        public static int MESSAGE_MAX_SIZE = 300000000;
+
+        public static MessageChat createMessageFromString(string str)
+        {
+            MessageChat msg = JsonConvert.DeserializeObject<MessageChat>(str);
+
+            return msg;
+        }
+
+        public static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        public static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+
+        public static string GetString(byte[] bytes, int length)
+        {
+            length++;
+
+            char[] chars = new char[length / sizeof(char)];
+
+            if (length > 0)
+                System.Buffer.BlockCopy(bytes, 0, chars, 0, length - 1);
+
+            return new string(chars);
+        }
+
+        public static byte[] getBytesFromImage(Image im)
+        {
+            MemoryStream ms = new MemoryStream();
+
+            im.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            return ms.ToArray();
+        }
+
+        static Semaphore semaphor = new Semaphore(1, 1);
+
+        public static void SendMessage(Socket socket, MessageChat msg)
+        {
+            BackgroundWorker bwSender = new BackgroundWorker();
+            bwSender.DoWork += new DoWorkEventHandler(bworkerSender);
+            bwSender.RunWorkerAsync(new object[] { socket, msg });
+        }
+
+        private static void bworkerSender(object sender, DoWorkEventArgs e)
+        {
+            object[] obj = e.Argument as object[];
+
+            Socket socket = obj[0] as Socket;
+            MessageChat msg = obj[1] as MessageChat;
+
+            semaphor.WaitOne();
+
+            string json = JsonConvert.SerializeObject(msg);
+            try
+            {
+                socket.Send(GetBytes(json));
+            }
+            catch (SocketException)
+            {
+            }
+
+            semaphor.Release();
+        }
+    }
+}

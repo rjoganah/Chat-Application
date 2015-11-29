@@ -1,0 +1,17 @@
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\bin\Debug\CSharpClientApplication.exe.config
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\bin\Debug\CSharpClientApplication.exe
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\bin\Debug\CSharpClientApplication.pdb
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\bin\Debug\ChatLib.dll
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\bin\Debug\ChatLib.pdb
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.csprojResolveAssemblyReference.cache
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.FormConnection.resources
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.FormChatRoom.resources
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.FormMain.resources
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.FormNewRoom.resources
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.Properties.Resources.resources
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.csproj.GenerateResource.Cache
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.exe
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.pdb
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.FormIPServer.resources
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\obj\Debug\CSharpClientApplication.FormChatPrivate.resources
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpClientApplication\bin\Debug\Newtonsoft.Json.dll

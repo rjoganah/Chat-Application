@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net.Sockets;
+using System.Net;
+using ChatLib;
+
+namespace CSharpServerApplication
+{
+    class Program
+    {
+        public static string host = "192.168.0.1";
+        public static int port = 8888;
+
+        static void Main(string[] args)
+        {
+            
+            Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            while (true)
+            {
+                ChatLib.ChatLib chat = new ChatLib.ChatLib();
+
+                serverSocket.Bind(new IPEndPoint(IPAddress.Parse(host),port));   
+ 
+                IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
+                IPAddress ipAddress = ipHostEntry.AddressList[0];
+                IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
+
+                System.Console.WriteLine(ipHostEntry.AddressList[0].ToString());
+
+                serverSocket.Bind(localEndPoint);
+                
+                serverSocket.Listen(50);
+
+                System.Console.WriteLine("cc");
+
+                Socket newSocket = null;
+
+                newSocket = serverSocket.Accept();
+
+                System.Console.WriteLine("cc");
+
+                if (serverSocket.Accept() != null)
+                {
+                    String slt  = "ccc";
+                    serverSocket.Send(ChatLib.ChatLib.GetBytes(slt));
+                }
+            }
+        }
+    }
+}

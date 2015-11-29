@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Forms;
+
+namespace CSharpClientApplication
+{
+    public partial class FormChatRoom : Form
+    {
+        public FormChatRoom()
+        {
+            InitializeComponent();
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            string msgToSend = this.textBoxMessage.Text;
+
+            writeUsername(FormMain.client.UserName);
+            writeMessage(msgToSend);
+        }
+
+        private void writeUsername(string username)
+        {
+            this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Bold);
+
+            if (username == FormMain.client.UserName)
+                this.richTextBoxChat.SelectionColor = Color.Red;
+            else 
+                this.richTextBoxChat.SelectionColor = Color.Green;
+
+            this.richTextBoxChat.SelectedText += username + " : ";
+        }
+
+        private void writeMessage(string message)
+        {
+            this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Regular);
+            this.richTextBoxChat.SelectionColor = Color.Black;
+            this.richTextBoxChat.SelectedText += message.Trim() + Environment.NewLine;
+        }
+
+        private void textBoxMessage_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBoxMessage.Text.Length > 0)
+            {
+                this.buttonSend.Enabled = true;
+            }
+            else
+            {
+                this.buttonSend.Enabled = false;
+            }
+        }
+
+
+    }
+}

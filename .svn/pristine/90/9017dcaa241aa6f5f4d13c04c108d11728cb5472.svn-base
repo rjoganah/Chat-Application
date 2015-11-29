@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ChatLib
+{
+    enum TYPE {
+        REQUEST_CREATE_CHAT_ROOM, ACK_CREATE_CHAT_ROOM, 
+        REQUEST_CONNECTION_USER, ACK_CONNECTION_USER 
+    };
+
+    public class Message
+    {
+
+    }
+}

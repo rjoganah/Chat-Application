@@ -1,0 +1,9 @@
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\bin\Debug\CSharpServerApplication.exe.config
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\bin\Debug\CSharpServerApplication.exe
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\bin\Debug\CSharpServerApplication.pdb
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\obj\Debug\CSharpServerApplication.csprojResolveAssemblyReference.cache
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\obj\Debug\CSharpServerApplication.exe
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\obj\Debug\CSharpServerApplication.pdb
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\bin\Debug\ChatLib.dll
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\bin\Debug\ChatLib.pdb
+C:\Users\Robee\Documents\Visual Studio 2012\Projects\CSharpChatApplicationV2\CSharpServerApplication\bin\Debug\Newtonsoft.Json.dll

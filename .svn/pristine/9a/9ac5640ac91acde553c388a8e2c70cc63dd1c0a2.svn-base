@@ -1,0 +1,191 @@
+﻿namespace CSharpClientApplication
+{
+    partial class FormMain
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainPanelContainer = new System.Windows.Forms.Panel();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.richTextBoxChat = new System.Windows.Forms.RichTextBox();
+            this.textBoxMessage = new System.Windows.Forms.TextBox();
+            this.buttonSend = new System.Windows.Forms.Button();
+            this.listViewChannel = new System.Windows.Forms.ListView();
+            this.mainMenuStrip.SuspendLayout();
+            this.mainPanelContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // mainMenuStrip
+            // 
+            this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.mainMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.mainMenuStrip.Name = "mainMenuStrip";
+            this.mainMenuStrip.Size = new System.Drawing.Size(784, 24);
+            this.mainMenuStrip.TabIndex = 0;
+            this.mainMenuStrip.Text = "mainMenuStrip";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.quitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // quitToolStripMenuItem
+            // 
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(97, 22);
+            this.quitToolStripMenuItem.Text = "Quit";
+            // 
+            // mainPanelContainer
+            // 
+            this.mainPanelContainer.Controls.Add(this.splitContainer);
+            this.mainPanelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanelContainer.Location = new System.Drawing.Point(0, 24);
+            this.mainPanelContainer.Name = "mainPanelContainer";
+            this.mainPanelContainer.Size = new System.Drawing.Size(784, 538);
+            this.mainPanelContainer.TabIndex = 1;
+            // 
+            // splitContainer
+            // 
+            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer.IsSplitterFixed = true;
+            this.splitContainer.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer.Name = "splitContainer";
+            // 
+            // splitContainer.Panel1
+            // 
+            this.splitContainer.Panel1.Controls.Add(this.listViewChannel);
+            this.splitContainer.Panel1MinSize = 150;
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.Controls.Add(this.buttonSend);
+            this.splitContainer.Panel2.Controls.Add(this.textBoxMessage);
+            this.splitContainer.Panel2.Controls.Add(this.richTextBoxChat);
+            this.splitContainer.Size = new System.Drawing.Size(784, 538);
+            this.splitContainer.SplitterDistance = 200;
+            this.splitContainer.TabIndex = 0;
+            // 
+            // richTextBoxChat
+            // 
+            this.richTextBoxChat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxChat.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.richTextBoxChat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBoxChat.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxChat.Name = "richTextBoxChat";
+            this.richTextBoxChat.ReadOnly = true;
+            this.richTextBoxChat.Size = new System.Drawing.Size(574, 486);
+            this.richTextBoxChat.TabIndex = 0;
+            this.richTextBoxChat.Text = "";
+            // 
+            // textBoxMessage
+            // 
+            this.textBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxMessage.HideSelection = false;
+            this.textBoxMessage.Location = new System.Drawing.Point(3, 495);
+            this.textBoxMessage.MaxLength = 3000;
+            this.textBoxMessage.Multiline = true;
+            this.textBoxMessage.Name = "textBoxMessage";
+            this.textBoxMessage.Size = new System.Drawing.Size(493, 40);
+            this.textBoxMessage.TabIndex = 1;
+            // 
+            // buttonSend
+            // 
+            this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSend.Location = new System.Drawing.Point(502, 495);
+            this.buttonSend.Name = "buttonSend";
+            this.buttonSend.Size = new System.Drawing.Size(75, 40);
+            this.buttonSend.TabIndex = 2;
+            this.buttonSend.Text = "Send";
+            this.buttonSend.UseVisualStyleBackColor = true;
+            // 
+            // listViewChannel
+            // 
+            this.listViewChannel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewChannel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listViewChannel.Location = new System.Drawing.Point(3, 3);
+            this.listViewChannel.Name = "listViewChannel";
+            this.listViewChannel.Size = new System.Drawing.Size(194, 532);
+            this.listViewChannel.TabIndex = 0;
+            this.listViewChannel.UseCompatibleStateImageBehavior = false;
+            // 
+            // FormMain
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.mainPanelContainer);
+            this.Controls.Add(this.mainMenuStrip);
+            this.MainMenuStrip = this.mainMenuStrip;
+            this.MaximumSize = new System.Drawing.Size(1920, 1080);
+            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Chat Application";
+            this.mainMenuStrip.ResumeLayout(false);
+            this.mainMenuStrip.PerformLayout();
+            this.mainPanelContainer.ResumeLayout(false);
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
+            this.splitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.MenuStrip mainMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+        private System.Windows.Forms.Panel mainPanelContainer;
+        private System.Windows.Forms.SplitContainer splitContainer;
+        private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.TextBox textBoxMessage;
+        private System.Windows.Forms.RichTextBox richTextBoxChat;
+        private System.Windows.Forms.ListView listViewChannel;
+    }
+}

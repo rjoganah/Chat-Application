@@ -1,0 +1,209 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Forms;
+using System.Net;
+using System.Net.Sockets;
+using ChatLib;
+
+namespace CSharpClientApplication
+{
+    public partial class FormChatRoom : Form
+    {
+        private volatile bool closingWindow = false;
+
+        private Client client = null;
+
+        public FormChatRoom()
+        {
+            InitializeComponent();
+
+            client = FormMain.client;
+
+            this.FormClosing += FormChatRoom_FormClosing;
+
+            Thread t1 = new Thread(new ThreadStart(receiveDatas));
+            t1.IsBackground = true;
+            t1.Start();
+
+            Thread t2 = new Thread(new ThreadStart(sendDatas));
+            t2.IsBackground = true;
+            t2.Start();
+        }
+
+        private void FormChatRoom_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            closingWindow = true;
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            string msgToSend = this.textBoxMessage.Text;
+
+            writeUsername(client.UserName);
+            writeMessage(msgToSend);
+
+            byte[] byData = ChatLib.ChatLib.GetBytes(msgToSend);
+            FormMain.client.ClientSocket.Send(byData);
+            
+            
+            
+        }
+
+        private void writeUsername(string username)
+        {
+            this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Bold);
+
+            if (username == client.UserName)
+                this.richTextBoxChat.SelectionColor = Color.Red;
+            else 
+                this.richTextBoxChat.SelectionColor = Color.Green;
+
+            this.richTextBoxChat.SelectedText += username + " : ";
+        }
+
+        private void writeMessage(string message)
+        {
+            this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Regular);
+            this.richTextBoxChat.SelectionColor = Color.Black;
+            this.richTextBoxChat.SelectedText += message.Trim() + Environment.NewLine;
+        }
+
+        private void textBoxMessage_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBoxMessage.Text.Length > 0)
+            {
+                this.buttonSend.Enabled = true;
+            }
+            else
+            {
+                this.buttonSend.Enabled = false;
+            }
+
+        }
+
+        private void receiveDatas()
+        {
+            while (true)
+            {
+                if (closingWindow) return;
+               
+                System.Diagnostics.Debug.WriteLine("Receive");
+
+                //Read the command's Type.
+                byte[] buffer = new byte[4];
+                int readBytes = this.client.NetworkStream.Read(buffer, 0, 4);
+                if (readBytes == 0)
+                    break;
+                MessageType messageType = (MessageType)(BitConverter.ToInt32(buffer, 0));
+
+                //Read the command's sender ip size.
+                buffer = new byte[4];
+                readBytes = this.client.NetworkStream.Read(buffer, 0, 4);
+                if (readBytes == 0)
+                    break;
+                int senderIPSize = BitConverter.ToInt32(buffer, 0);
+
+                //Read the command's sender ip.
+                buffer = new byte[senderIPSize];
+                readBytes = this.client.NetworkStream.Read(buffer, 0, senderIPSize);
+                if (readBytes == 0)
+                    break;
+                IPAddress senderIP = IPAddress.Parse(System.Text.Encoding.ASCII.GetString(buffer));
+
+                //Read the command's sender name size.
+                buffer = new byte[4];
+                readBytes = this.client.NetworkStream.Read(buffer, 0, 4);
+                if (readBytes == 0)
+                    break;
+                int senderNameSize = BitConverter.ToInt32(buffer, 0);
+
+                //Read the command's sender name.
+                buffer = new byte[senderNameSize];
+                readBytes = this.client.NetworkStream.Read(buffer, 0, senderNameSize);
+                if (readBytes == 0)
+                    break;
+                string senderName = System.Text.Encoding.Unicode.GetString(buffer);
+
+                //Read the command's target size.
+                string cmdTarget = "";
+                buffer = new byte[4];
+                readBytes = this.client.NetworkStream.Read(buffer, 0, 4);
+                if (readBytes == 0)
+                    break;
+                int ipSize = BitConverter.ToInt32(buffer, 0);
+
+                //Read the command's target.
+                buffer = new byte[ipSize];
+                readBytes = this.client.NetworkStream.Read(buffer, 0, ipSize);
+                if (readBytes == 0)
+                    break;
+                cmdTarget = System.Text.Encoding.ASCII.GetString(buffer);
+
+                //Read the command's MetaData size.
+                string cmdMetaData = "";
+                buffer = new byte[4];
+                readBytes = this.client.NetworkStream.Read(buffer, 0, 4);
+                if (readBytes == 0)
+                    break;
+                int metaDataSize = BitConverter.ToInt32(buffer, 0);
+
+                //Read the command's Meta data.
+                buffer = new byte[metaDataSize];
+                readBytes = this.client.NetworkStream.Read(buffer, 0, metaDataSize);
+                if (readBytes == 0)
+                    break;
+                cmdMetaData = System.Text.Encoding.Unicode.GetString(buffer);
+
+                ChatLib.Message cmd = new ChatLib.Message(messageType, IPAddress.Parse(cmdTarget), cmdMetaData);
+                cmd.SenderIP = senderIP;
+                cmd.SenderName = senderName;
+
+                System.Diagnostics.Debug.WriteLine(cmd.ToString());
+                //this.OnCommandReceived(new CommandEventArgs(cmd));
+            }
+        }
+
+        private void sendDatas()
+        {
+            while (true)
+            {
+                if (closingWindow) return;
+
+                ChatLib.Message msg = new ChatLib.Message(MessageType.Message, null, "Yo");
+
+                //CommandType
+                byte[] buffer = new byte[4];
+                buffer = BitConverter.GetBytes((int)msg.MessageType);
+                this.client.NetworkStream.Write(buffer, 0, 4);
+                this.client.NetworkStream.Flush();
+                //Command Target
+                byte[] ipBuffer = Encoding.ASCII.GetBytes(msg.TargetIP.ToString());
+                buffer = new byte[4];
+                buffer = BitConverter.GetBytes(ipBuffer.Length);
+                this.client.NetworkStream.Write(buffer, 0, 4);
+                this.client.NetworkStream.Flush();
+                this.client.NetworkStream.Write(ipBuffer, 0, ipBuffer.Length);
+                this.client.NetworkStream.Flush();
+                //Command MetaData
+                byte[] metaBuffer = Encoding.Unicode.GetBytes(msg.ContentMessage);
+                buffer = new byte[4];
+                buffer = BitConverter.GetBytes(metaBuffer.Length);
+                this.client.NetworkStream.Write(buffer, 0, 4);
+                this.client.NetworkStream.Flush();
+                this.client.NetworkStream.Write(metaBuffer, 0, metaBuffer.Length);
+                this.client.NetworkStream.Flush();
+
+
+                System.Diagnostics.Debug.WriteLine("Send");
+            }
+        }
+    }
+}

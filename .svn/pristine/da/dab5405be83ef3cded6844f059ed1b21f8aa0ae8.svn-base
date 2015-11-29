@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CSharpClientApplication
+{
+    public class Client
+    {
+        private Socket mClientSocket;
+        private string mUserName;
+        private string mPassword;
+
+        public Client() { }
+
+        public Client(string user, string pass)
+        {
+            UserName = user;
+            Password = pass;
+        }
+
+        public bool Connected
+        {
+            get
+            {
+                if (ClientSocket != null)
+                {
+                    return this.ClientSocket.Connected;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public Socket ClientSocket
+        {
+            get { return this.mClientSocket; }
+            set { this.mClientSocket = value; }
+        }
+
+        public string UserName
+        {
+            get { return this.mUserName; }
+            set { this.mUserName = value; }
+        }
+
+        public string Password
+        {
+            get { return this.mPassword; }
+            set { this.mPassword = value; }
+        }
+    }
+}

@@ -1,0 +1,157 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Forms;
+using System.Net;
+using System.Net.Sockets;
+
+namespace CSharpClientApplication
+{
+    public partial class FormChatRoom : Form
+    {
+        private volatile bool closingWindow = false;
+
+        private string chatRoomName;
+        private Client client = null;
+
+        public FormChatRoom(string name)
+        {
+            InitializeComponent();
+
+
+            client = FormMain.client;
+            this.chatRoomName = name;
+
+            this.FormClosing += FormChatRoom_FormClosing;
+
+            Thread t1 = new Thread(new ThreadStart(receiveDatas));
+            t1.IsBackground = true;
+            t1.Start();
+
+            Thread t2 = new Thread(new ThreadStart(sendDatas));
+            t2.IsBackground = true;
+            t2.Start();
+        }
+
+        private void FormChatRoom_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            closingWindow = true;
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            string msgToSend = this.textBoxMessage.Text;
+
+            writeUsername(client.UserName);
+            writeMessage(msgToSend);
+
+            byte[] byData = ChatLib.ChatLib.GetBytes(msgToSend);
+            FormMain.client.ClientSocket.Send(byData);
+
+
+
+        }
+
+        private void writeUsername(string username)
+        {
+            this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Bold);
+
+            if (username == client.UserName)
+                this.richTextBoxChat.SelectionColor = Color.Red;
+            else
+                this.richTextBoxChat.SelectionColor = Color.Green;
+
+            this.richTextBoxChat.SelectedText += username + " : ";
+        }
+
+        private void writeMessage(string message)
+        {
+            this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Regular);
+            this.richTextBoxChat.SelectionColor = Color.Black;
+            this.richTextBoxChat.SelectedText += message.Trim() + Environment.NewLine;
+        }
+
+        private void textBoxMessage_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBoxMessage.Text.Length > 0)
+            {
+                this.buttonSend.Enabled = true;
+            }
+            else
+            {
+                this.buttonSend.Enabled = false;
+            }
+        }
+
+        private void receiveDatas()
+        {
+            byte[] buf = new byte[ChatLib.ChatLib.MESSAGE_MAX_SIZE];
+            int bufLenght;
+
+            ChatLib.MessageChat message = null;
+
+            while (true)
+            {
+                if (closingWindow) return;
+
+                //listen the message from the server
+
+                bufLenght = FormMain.client.ClientSocket.Receive(buf);
+
+                message = ChatLib.ChatLib.createMessageFromString(ChatLib.ChatLib.GetString(buf, bufLenght));
+
+                // Suivant le type de message 
+                switch (message.MessageType)
+                {
+                    case ChatLib.MessageType.None: break;
+
+                    // Message texte chat room
+                    case ChatLib.MessageType.ClientChatRoomMessage:
+                        if (message.TargetName == chatRoomName)
+                        {
+                            this.writeUsername(message.SenderName);
+                            this.writeMessage(message.ContentMessage);
+                        }
+                        break;
+
+                    case ChatLib.MessageType.UpdateConnectedUsersInChatRoom:
+                        if (message.TargetName == chatRoomName)
+                        {
+                            ;
+                        }
+                        break;
+
+                    case ChatLib.MessageType.ClientPrivateMessage:
+                        break;
+                }
+            }
+        }
+
+        private void sendDatas()
+        {
+            while (true)
+            {
+                if (closingWindow) return;
+                //FormMain.client.ClientSocket.R
+                System.Diagnostics.Debug.WriteLine("Send");
+            }
+        }
+
+        private void richTextBoxChat_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listClient_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

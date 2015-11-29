@@ -1,0 +1,86 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net.Sockets;
+using System.Net;
+using ChatLib;
+using System.Threading;
+
+namespace CSharpServerApplication
+{
+    class Program
+    {
+        public static int port = 0;
+
+        public static List<Socket> socketList;
+        public static Socket serverSocket;
+
+        //Bind socket to server ip address and Listen to an available port
+        public static Socket setServerSocket()
+        {
+            Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
+
+            //On prend uniquement une adresse IPV4 (Ne marche pas pour les IPV 6 car le serverSocket est initialisé en mode InterNetwork, pas en InterNetworkV6)
+            IPAddress ipAddress = null;     
+            foreach (IPAddress ipAdd in ipHostEntry.AddressList)
+            {
+                if (ipAdd.AddressFamily.Equals(AddressFamily.InterNetwork))
+                {
+                    ipAddress = ipAdd;
+                }
+            }
+
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
+
+            serverSocket.Bind(localEndPoint);
+
+            serverSocket.Listen(50);
+
+            System.Console.WriteLine("Listening to: " + ipAddress);
+
+            return serverSocket;
+        }
+
+        public static void connectionEstablishment()
+        {
+            while (true)
+            {
+                Socket newSocket = null;
+
+                newSocket = serverSocket.Accept();
+
+                System.Console.WriteLine("Connection Accepted");
+
+                if (serverSocket.Accept() != null)
+                {
+                    socketList.Add(newSocket);
+                }
+               
+                //get the name, the password and check it ? Et après que fait on ?...
+                //Dans une nouvelle Thread ?
+
+                if (serverSocket.Accept() != null)
+                {
+                    String slt = "ccc";
+                    serverSocket.Send(ChatLib.ChatLib.GetBytes(slt));
+                }
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            ChatLib.ChatLib chat = new ChatLib.ChatLib();
+            socketList = new List<Socket>();
+
+            serverSocket = setServerSocket();
+            
+            Thread connection = new Thread(connectionEstablishment);
+
+            connection.Start();
+        }
+    }
+}

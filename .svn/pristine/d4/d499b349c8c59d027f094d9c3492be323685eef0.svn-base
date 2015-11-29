@@ -1,0 +1,110 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CSharpClientApplication
+{
+    public partial class FormChatPrivate : Form
+    {
+        private volatile bool closingWindow = false;
+        private Client client = null;
+        private string colleagueName = null;
+
+        public FormChatPrivate(string nameSecondClient)
+        {
+            InitializeComponent();
+
+            colleagueName = nameSecondClient;
+
+            this.Text = colleagueName + " - Private Chat";
+
+            client = FormMain.client;
+
+            this.FormClosing += FormChatPrivate_FormClosing;
+        }
+
+        public string PrivateChatName
+        {
+            get { return this.colleagueName; }
+            set { this.colleagueName = value; }
+        }
+
+        private void FormChatPrivate_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ChatLib.MessageChat msg = new ChatLib.MessageChat(ChatLib.MessageType.PrivateChatExit, client.UserName, this.colleagueName, null);
+
+            ChatLib.ChatLib.SendMessage(client.ClientSocket, msg);
+
+            closingWindow = true;
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            string msgToSend = this.textBoxMessage.Text;
+
+            ChatLib.MessageChat msg = new ChatLib.MessageChat(ChatLib.MessageType.ClientPrivateMessage, client.UserName, this.colleagueName, msgToSend);
+
+            ChatLib.ChatLib.SendMessage(client.ClientSocket, msg);
+
+            this.writeUsername(client.UserName);
+            this.writeMessage(msgToSend);
+
+            this.textBoxMessage.Text = "";
+        }
+
+        private void writeUsername(string username)
+        {
+            this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Bold);
+
+            if (username == client.UserName)
+                this.richTextBoxChat.SelectionColor = Color.Red;
+            else
+                this.richTextBoxChat.SelectionColor = Color.Green;
+
+            this.richTextBoxChat.SelectedText += username + " : ";
+        }
+
+        private void writeMessage(string message)
+        {
+            this.richTextBoxChat.SelectionFont = new Font(this.richTextBoxChat.SelectionFont, FontStyle.Regular);
+            this.richTextBoxChat.SelectionColor = Color.Black;
+            this.richTextBoxChat.SelectedText += message.Trim() + Environment.NewLine;
+        }
+
+        private void textBoxMessage_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBoxMessage.Text.Length > 0)
+            {
+                this.buttonSend.Enabled = true;
+            }
+            else
+            {
+                this.buttonSend.Enabled = false;
+            }
+        }
+
+        public void OnReceivedMessage(ChatLib.MessageChat message)
+        {
+            // Suivant le type de message 
+            switch (message.MessageType)
+            {
+                case ChatLib.MessageType.None: break;
+
+                case ChatLib.MessageType.ClientPrivateMessage:
+                    if (message.TargetName == PrivateChatName)
+                    {
+                        this.writeUsername(message.SenderName);
+                        this.writeMessage(message.ContentMessage);
+                    }
+                    break;
+            }
+        }
+    }
+}

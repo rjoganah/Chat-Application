@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ChatLib
+{
+    public enum MessageType
+    {
+        Message, // Type message texte
+        ClientLogIn, // un client se log
+        ClientLogOff, // un client se deco
+        ChatRoomCreate, // un client demande la creation d'un chat room
+        AllConnectedClients // Demande de lal liste de tous les clients co
+    }
+}
